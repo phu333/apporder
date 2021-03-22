@@ -1,33 +1,38 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from "react-navigation";
+import HomeAct from './components/home';
+import MenuAct from './components/menu';
+import FoodAct from './components/food';
+import OrderAct from './components/order';
+import CartAct from "./components/Cart";
+import FoodAddAct from "./components/foodadd";
+import FoodUpdateAct from "./components/foodupdate";
+import LoginAct from "./components/login";
+const RootStack = createStackNavigator(
+{
+  Home: { screen: HomeAct },
+  Menu: { screen: MenuAct },
+  Food: { screen: FoodAct },
+  Order: { screen: OrderAct },
+  Cart: { screen: CartAct },
+  FoodAdd: { screen: FoodAddAct },
+  FoodUpdate: { screen: FoodUpdateAct },
+  Login: { screen: LoginAct },
+},
+{
+    initialRouteName: 'Login',
 }
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
+);
+const Apps = createAppContainer(RootStack)
+export default class App extends Component {
+  render() {
+    return <Apps />;
+  }
 }
 
-const Tab = createBottomTabNavigator();
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
+YellowBox.ignoreWarnings(
+      ['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader'
+]);
